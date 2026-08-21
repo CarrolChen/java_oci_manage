@@ -125,6 +125,8 @@
 ### Oracle Cloud
 
 - [x] Instance management (create, quick boot, Force ARM boot, start, stop, reboot, terminate, reset OS, scale, rename, repair)
+- [x] Quick config launch (AMD Micro 1C/1G and ARM A1 2C/12G presets filling shape, image, key, and retry delay)
+- [x] Create from an existing boot volume (single instance, automatically constrained to the volume's availability domain)
 - [x] Instance list with boot volume info merged inline
 - [x] Force ARM boot (improve ARM creation success rate for trial accounts, supports Web + Telegram)
 - [x] Network management (change IP, attach IPv4/IPv6, reserved IP, delete IP)
@@ -133,6 +135,8 @@
 - [x] User management (create, delete, reset password, update email, clear MFA, rename tenant, view identity domain password policy)
 - [x] Statistics overview (cost, traffic, subscription info, quota)
 - [x] Profile management (list, switch, delete)
+- [x] One-click Profile copy to a new region (OCI / AWS; credentials copied server-side, only the region is replaced)
+- [x] Per-Profile API outbound proxy (web panel + Telegram, with proxied accounts flagged on the overview page)
 - [x] Object Storage management (bucket browsing, file upload/download/delete)
 - [x] Instance monitoring alerts / auto-start / daily report / health check
 - [x] Serial Console (OCI instance serial console connection, WebSocket real-time terminal, Netboot.xyz rescue boot automation)
@@ -157,6 +161,7 @@
 ### Cloudflare DNS
 
 - [x] Zone listing, DNS record CRUD operations
+- [x] API Token authentication (minimal scope, coexists with Global API Key, token takes precedence)
 
 ### DigitalOcean
 
@@ -182,6 +187,13 @@
 - [x] Start / Stop / Restart / Force power off
 - [x] Instance rename
 - [x] System password reset
+
+### Cloud & Domain Monitoring
+
+- [x] Traffic Guard (per-account monthly traffic threshold; notify only, or automatically stop every instance on that account across all regions)
+- [x] Uptime Guard (unexpected-stop notifications and auto-restart; accounts stopped by Traffic Guard stay down for the rest of the month)
+- [x] Domain and SSL certificate expiry monitoring (daily scheduled checks, tiered Telegram alerts at 30/14/7/1 days and expired)
+- [x] One-click import of Cloudflare-hosted domains, with punycode conversion for internationalized domain search
 
 ### General
 

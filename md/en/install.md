@@ -175,12 +175,26 @@ virtfusion=end
 
 ### Cloudflare Configuration (Optional)
 
+Two authentication methods; pick one.
+
+**API Token (recommended)**
+
+```ini
+cf_api_token=your_API_Token
+```
+
+> Create it in the Cloudflare dashboard with Zone → DNS → Edit and Zone → Zone → Read. Its scope can be limited to specific zones.
+
+**Global API Key**
+
 ```ini
 cf_email=your_cloudflare_email
 cf_account_key=your_Global_API_Key
 ```
 
-> Get the Cloudflare Key at: My Profile → API Tokens → API Keys → Global API Key
+> Get it at: My Profile → API Tokens → API Keys → Global API Key. This key carries full account permissions, cannot be scoped down, and there is exactly one per account. Prefer the token.
+
+With both configured, the token wins. DNS record management, auto DNS updates on IP change, ACME certificate issuance, domain monitoring imports, and email domain verification all share these credentials.
 
 ### Network Configuration (Optional)
 

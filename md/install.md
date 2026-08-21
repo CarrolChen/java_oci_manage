@@ -193,12 +193,26 @@ virtfusion=end
 
 ### Cloudflare 配置（可选）
 
+两种认证方式，任选其一。
+
+**API Token（推荐）**
+
+```ini
+cf_api_token=你的API_Token
+```
+
+> 在 Cloudflare 后台创建，权限勾选 Zone → DNS → Edit 和 Zone → Zone → Read 即可。作用范围可以限定到指定域名。
+
+**Global API Key**
+
 ```ini
 cf_email=你的Cloudflare邮箱
 cf_account_key=你的Global_API_Key
 ```
 
-> Cloudflare Key 获取路径：我的个人资料 → API 令牌 → API 密钥 → Global API Key
+> 获取路径：我的个人资料 → API 令牌 → API 密钥 → Global API Key。这把钥匙拥有账户全部权限且不可收敛，每个账户只有一把，能用 Token 就别用它。
+
+两者都填时以 Token 为准。DNS 记录管理、换 IP 自动更新 DNS、ACME 证书签发、域名监控导入、邮件域校验共用这套凭据。
 
 ### 网络配置（可选）
 

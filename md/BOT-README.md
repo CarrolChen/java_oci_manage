@@ -110,6 +110,8 @@
 
 使用此命令可以对客户端某个profile添加http代理请求从而不使用客户端ip
 
+同样的配置在 Web 面板的 profile 编辑器里也能改
+
 ### /clearlock
 
 - 清除密码错误过多导致的锁定
@@ -136,7 +138,7 @@
 可以更换ip\
 可以快速将机器ip分配给cloudflare托管的域名\
 也可以在更换ip的同时对ip所绑定域名的DNS记录进行更新 达到伪ddns的功能\
-(需要提前将cloudflare的邮箱和密钥填入配置文件内，cloudflare key 在我的个人资料->API令牌处->API密钥->Global API Key	获取)\
+(需要提前在配置文件内填写 cloudflare 凭据，`cf_api_token` 或 邮箱+Global API Key 二选一，推荐前者，详见[安装与配置](./install.md#cloudflare-配置可选))\
 删除域名为清空当前ip的所绑定的所有域名\
 可以删掉当前ip
 

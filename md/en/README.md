@@ -23,6 +23,7 @@ R-Bot is a **dual-architecture** multi-cloud infrastructure management system th
 | **Web Cloud Management** | Manage instances, networks, volumes, users, DNS, object storage, serial console from your browser |
 | **Multi-Cloud Support** | Oracle Cloud, AWS, GCP, Azure, DigitalOcean, SolusVM, VirtFusion |
 | **Cloudflare Integration** | DNS management, ACME auto-certificates, auto DNS update on IP change |
+| **Cloud Monitoring & Expiry Alerts** | Auto-shutdown on traffic overage, auto-restart on unexpected stop, Telegram alerts before domains and certificates expire |
 | **Cloud Host Sync** | One-click discover and sync hosts from multiple clouds to SSH session list |
 | **GraalVM Native Compilation** | Sub-second startup, low memory footprint |
 
@@ -64,7 +65,7 @@ On first startup, credentials are auto-generated and an activation banner appear
 
 Once activated, add your cloud API parameters to start using the platform.
 
-Details → [Installation & Configuration](./install.md)
+Details → [Getting Started](./quickstart.md) ｜ [Installation & Configuration](./install.md)
 
 ---
 
@@ -109,13 +110,17 @@ Details → [Web SSH Terminal Guide](./webssh.md)
 Manage multi-cloud resources directly from your browser — fully aligned with the Telegram bot's capabilities.
 
 - **Instance Management** — Create instance, quick boot, start, stop, reboot, terminate, reset OS, scale up/down
+- **Quick Config Launch** — One-click AMD Micro / ARM A1 presets, or boot straight from an existing boot volume
 - **A1 Config Audit** — Scan OCI ARM always-free quota + preemptive downscale (account-level / batch / per-instance, never auto-deletes instances)
 - **Serial Console** — OCI instance serial console connection with Netboot.xyz rescue boot automation
 - **Network Management** — Change IP, attach IPv4/IPv6, reserved IP management
 - **Volume Management** — Resize, VPU performance tuning, detach/delete
 - **User Management** — Create users, reset passwords, update email, clear 2FA
 - **Statistics Overview** — Cost, traffic, subscription info, quota queries
-- **DNS Management** — Cloudflare domain record CRUD operations
+- **DNS Management** — Cloudflare domain record CRUD operations (API Token auth with minimal scope supported)
+- **Cloud Monitoring** — Per-account traffic thresholds with automatic shutdown, plus stop notifications and auto-restart
+- **Domain Monitoring** — Daily domain and SSL certificate expiry checks with tiered Telegram alerts, one-click Cloudflare import
+- **Account Isolation** — Per-profile API outbound proxy, and one-click profile copy to a new region
 - **Object Storage** — OCI Object Storage bucket and file management
 - **Email Delivery** — One-click email domain setup (DKIM/DNS/SMTP fully automated), test send
 - **AWS Management** — EC2 instance create/manage/delete, Lightsail instance list/power/delete/traffic/network-IP management, network management, cost statistics
@@ -132,6 +137,16 @@ Details → [Web Cloud Management Guide](./cloud.md)
 ---
 
 ## Documentation
+
+**Start with these three**
+
+| Tutorial | Description |
+|----------|-------------|
+| [Getting Started](./quickstart.md) | From installing the client to launching your first instance and connecting to it |
+| [Oracle Instance Launch Guide](./boot-oracle.md) | Launching from the bot and the web panel, how the capacity retry works, failure triage |
+| [How-To Guide](./howto.md) | Rotate IPs with DNS updates, traffic-overage shutdown, A1 downscaling, domain monitoring, serial-console rescue |
+
+**Reference**
 
 | Document | Description |
 |----------|-------------|

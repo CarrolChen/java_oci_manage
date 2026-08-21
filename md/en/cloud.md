@@ -43,6 +43,8 @@ Switch between Profiles to view different account information.
 |--------|-------------|
 | View Instance List | Display all instances and status with boot volume info merged inline |
 | Create Instance | Create a new instance with custom specs, image, and network |
+| Quick Config | One-click AMD Micro 1C/1G or ARM A1 2C/12G preset that also fills image, disk, count, delay, and selects a public key |
+| Create from Boot Volume | Boot an existing detached boot volume with its system and data intact; one instance at a time, and only in the volume's availability domain |
 | Force ARM Boot | Improve ARM instance creation success rate for trial accounts (briefly uses paid features, use at your own risk) |
 | Quick Boot | Quickly create an instance from saved configurations |
 | Start / Stop / Reboot | Basic instance operations |
@@ -119,8 +121,10 @@ A dedicated workbench for the OCI ARM (A1.Flex) always-free quota — one-click 
 
 | Action | Description |
 |--------|-------------|
-| List Profiles | Display all configured OCI Profiles |
+| List Profiles | Display all configured OCI Profiles, marking which accounts have an API outbound proxy |
 | Switch Profile | Switch to a different cloud account |
+| Copy to New Region | Clone an existing Profile into another region; credentials are copied server-side and only the region is replaced |
+| API Outbound Proxy | Configure an outbound proxy per Profile so different accounts send API requests from different egress IPs |
 | Delete Profile | Remove unwanted Profiles |
 
 ### Email Delivery
@@ -299,6 +303,54 @@ Connect to an OCI instance's serial console via Console Connection — useful fo
 
 ---
 
+## Cloud Monitoring
+
+The "Cloud Monitoring" tab in the workbench. Two groups of rules, sharing one configuration with the bot's instance monitoring — change either side and the other follows.
+
+### Traffic Guard (per account)
+
+The OCI free allowance is 10240 GB per month; past that you are billed by usage. Set a monthly threshold per account.
+
+| Item | Description |
+|------|-------------|
+| Watched Account | Configured per Profile |
+| Threshold | In GB. Billing data lags 4–24 hours, so 9000 leaves room to act — a threshold at the ceiling arrives too late |
+| Notify Only | Telegram message, instances untouched |
+| Auto Shutdown | Immediately stops **every region's** instances on that account (SOFTSTOP). Fires without a second confirmation |
+| Current Usage | Sourced from the Oracle billing API; not a real-time figure |
+
+Before choosing auto shutdown: if you start the instances again while still over the threshold, they are stopped again within the hour. And if they stay off too long, Oracle may reclaim capacity quota for contended shapes like A1, meaning you have to win the capacity race again.
+
+### Uptime Guard (all accounts)
+
+| Toggle | Description |
+|--------|-------------|
+| Stop Notifications | Checks every 8 minutes and sends a Telegram message on unexpected shutdown |
+| Auto-Start | Starts stopped instances back up. Accounts shut down by Traffic Guard are excluded for the rest of the month so bandwidth does not keep burning |
+
+---
+
+## Domain Monitoring
+
+The "Domain Monitoring" tab in the workbench. A daily job checks domain registration expiry and SSL certificate expiry, warning over Telegram as the dates approach.
+
+| Action | Description |
+|--------|-------------|
+| Add Domain | Add a single domain manually |
+| Import from Cloudflare | Bulk-import hosted zones; duplicates are skipped, and anything left out by the cap is reported |
+| Reminder Toggle | Enable or disable alerts per domain |
+| Check Now | Probe immediately instead of waiting for the daily run |
+| Search | Handles internationalized domains, converting to punycode automatically |
+| Delete | Stop monitoring the domain |
+
+Alert tiers are 30 / 14 / 7 / 1 days plus expired, deduplicated per tier so each one fires once.
+
+Enter the registrable domain (`example.com`) rather than a subdomain — subdomains have no registration record, so domain expiry shows "unknown" while certificate checks still work. A failed check keeps the previous values and marks them unknown instead of overwriting good data.
+
+Permissions: adding, importing, and enabling reminders require Lightning; disabling, deleting, viewing, and "Check now" do not.
+
+---
+
 ## Settings
 
 ### Instance Monitoring
@@ -330,10 +382,12 @@ Upload, edit, and manage cloud platform API configurations directly from the web
 | VirtFusion Config Upload | Paste host/token/preset or use preset vendors for quick filling |
 | Merge Mode | Duplicate Profile names are skipped with a warning, new Profiles are appended |
 | Online Profile Editing | Configured Profiles are shown as a chip list; click to edit fields inline — no more SSH-ing in to edit files |
+| Copy Profile to New Region | OCI / AWS Profiles can be cloned into another region in one click; only the region changes, and AWS availability-zone forms are normalized automatically |
+| API Outbound Proxy | Configured per account at the bottom of the profile editor. Disabling requires "Remove Proxy" — clearing the fields and saving does not count |
 | Delete Single Profile | Delete a specific Profile and clean up dangling default-Profile references |
 | Secret Masking | Secrets / tokens are masked in the UI; plaintext is never sent to the browser |
 | AWS Region Fix | Real-time hint and one-click fix when a region is mistyped as an availability zone (e.g. ap-southeast-1a) |
-| Cloudflare Config | Edit Cloudflare email and API Key online |
+| Cloudflare Config | Edit Cloudflare credentials online. Both API Token (needs only Zone→DNS→Edit and Zone→Zone→Read) and Global API Key are supported; the token wins when both are present |
 | Network Config | Edit local address, URL name, and startup mode online |
 | Hot Reload | Configuration hot-reloads immediately on save; can also be refreshed manually — no client restart needed |
 
